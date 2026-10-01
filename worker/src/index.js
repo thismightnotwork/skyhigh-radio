@@ -24,7 +24,7 @@ export default {
 
     const roomId = env.RADIO_ROOM.idFromName(channel);
     const room = env.RADIO_ROOM.get(roomId);
-    return room.fetch(new Request("https://radio-room.internal/ws", { headers: request.headers }));
+    return room.fetch(request);
   }
 };
 
