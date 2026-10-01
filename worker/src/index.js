@@ -48,7 +48,7 @@ export class RadioRoom {
     const server = pair[1];
     const peerId = crypto.randomUUID();
 
-    this.ctx.acceptWebSocket(server, { peerId });
+    this.ctx.acceptWebSocket(server, ["peerId", peerId]);
     const peers = this.getPeers();
     this.send(server, { type: "welcome", peerId, peers });
     this.broadcast({ type: "peer-joined", peerId }, server);
@@ -103,7 +103,8 @@ export class RadioRoom {
   }
 
   getPeerId(webSocket) {
-    return this.ctx.getWebSocketAttachment(webSocket)?.peerId || null;
+    const attachment = this.ctx.getWebSocketAttachment(webSocket);
+    return Array.isArray(attachment) && attachment[0] === "peerId" ? attachment[1] : null;
   }
 
   findSocketByPeerId(peerId) {
