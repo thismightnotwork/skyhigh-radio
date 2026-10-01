@@ -103,7 +103,7 @@ export class RadioRoom {
   }
 
   getPeerId(webSocket) {
-    const attachment = this.ctx.getWebSocketAttachment(webSocket);
+    const attachment = webSocket.deserializeAttachment();
     return Array.isArray(attachment) && attachment[0] === "peerId" ? attachment[1] : null;
   }
 
